@@ -1,6 +1,4 @@
-# Doppelganger
-
-Fine-tuning LLM on my Telegram chats. You may read full story [in my blog](https://asmirnov.xyz/doppelganger).
+# Finetune LLM
 
 ## Dataset Preparation
 
@@ -147,7 +145,7 @@ If you are interested, Telegram have several types of messages which should be h
 
 ## Training
 
-Final version of models were trained with the parameters which are default in training scripts. Training logs can be accessed on [WandB](https://wandb.ai/furiousteabag/doppelganger).
+Final version of models were trained with the parameters which are default in training scripts.
 
 ### LoRA fine-tune
 

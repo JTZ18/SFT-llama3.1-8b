@@ -40,7 +40,7 @@ def smart_tokenizer_and_embedding_resize(
 
 
 def train(
-    model_name_or_path: str = "mistralai/Mistral-7B-v0.1",
+    model_name_or_path: str = "NousResearch/Meta-Llama-3.1-8B",
     data_path: str = "./data/messages.json",
     output_dir: str = "./weights/full/",
     gradient_accumulation_steps: int = 4,
@@ -52,7 +52,7 @@ def train(
     weight_decay: float = 0.0,
     max_seq_length: int = 1024,
     fsdp: str = "full_shard auto_wrap",
-    fsdp_transformer_layer_cls_to_wrap: str = "MistralDecoderLayer",
+    fsdp_transformer_layer_cls_to_wrap: str = "LlamaDecoderLayer",
     wandb_project: str = "doppelganger",
     logging_steps: int = 1,
 ):
@@ -97,7 +97,7 @@ def train(
         num_train_epochs=num_epochs,
         per_device_train_batch_size=micro_batch_size,
         gradient_accumulation_steps=gradient_accumulation_steps,
-        optim="adamw_torch",
+        optim="paged_adamw_8bit",
         save_steps=500,
         logging_steps=logging_steps,
         logging_first_step=True,
@@ -127,6 +127,11 @@ def train(
     trainer.train()
     trainer.save_state()
     trainer.save_model(output_dir)
+    try:
+        trainer.push_to_hub()
+    except Exception as e:
+        logger.error(f"Failed to push to hub: {e}")
+
     wandb.finish()
 
 
