@@ -40,7 +40,7 @@ def smart_tokenizer_and_embedding_resize(
 
 
 def train(
-    model_name_or_path: str = "NousResearch/Meta-Llama-3.1-8B",
+    model_name_or_path: str = "NousResearch/Hermes-3-Llama-3.1-8B",
     data_path: str = "./data/messages.json",
     output_dir: str = "./weights/full/",
     gradient_accumulation_steps: int = 4,
