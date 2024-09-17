@@ -97,7 +97,7 @@ def train(
         num_train_epochs=num_epochs,
         per_device_train_batch_size=micro_batch_size,
         gradient_accumulation_steps=gradient_accumulation_steps,
-        optim="paged_adamw_8bit",
+        optim="adamw_torch",
         save_steps=500,
         logging_steps=logging_steps,
         logging_first_step=True,
