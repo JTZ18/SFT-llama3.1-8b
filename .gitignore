@@ -8,3 +8,4 @@ weights/
 wandb/
 .cache/
 .venv
+.DS_Store
