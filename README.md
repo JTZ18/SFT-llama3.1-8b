@@ -175,6 +175,12 @@ To train:
 torchrun --nnodes=1 --nproc_per_node=NUMBER_OF_GPUS finetune_full.py
 ```
 
+To save model to HF, run:
+
+```
+python save_hf.py --model_name_or_path ./weights/full --hub_model_id jtz18/llama3-8b-jon --hf_token <YOUR_HF_TOKEN>
+```
+
 ## Launching
 
 Use [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui). If you used LoRA, then clone [ehartford/dolphin-2.2.1-mistral-7b](https://huggingface.co/ehartford/dolphin-2.2.1-mistral-7b) or whatever model you are used as a base model and put trained LoRA connectors to `./loras/` folder within text-generation-webui. If you did full fine-tune, then copy training result to `./models/`.
