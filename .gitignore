@@ -7,5 +7,6 @@ result.json
 weights/
 wandb/
 .cache/
+venv
 .venv
 .DS_Store
