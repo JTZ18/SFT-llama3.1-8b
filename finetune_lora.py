@@ -6,6 +6,7 @@ from loguru import logger
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, MistralForCausalLM, TrainingArguments
 from trl import SFTTrainer
+from huggingface_hub import HfApi, HfFolder, Repository, create_repo
 
 from utils.finetune_utils import DataCollatorForLanguageModelingChatML, prepare_dataset, print_trainable_parameters
 
@@ -26,6 +27,7 @@ def train(
     weight_decay: float = 0.001,
     max_seq_length: int = 1024,
     wandb_project: str = "doppelganger",
+    hf_repo_name: str = "jtz18/llama-31-8b-lora",
 ):
     gradient_accumulation_steps = batch_size // micro_batch_size
 
@@ -106,6 +108,12 @@ def train(
     trainer.model.save_pretrained(output_dir)
     wandb.finish()
 
+    # Upload to Hugging Face
+    api = HfApi()
+    token = HfFolder.get_token()
+    create_repo(hf_repo_name, token=token, private=False)
+    repo = Repository(output_dir, clone_from=hf_repo_name)
+    repo.push_to_hub(commit_message="Upload LoRA model")
 
 if __name__ == "__main__":
     fire.Fire(train)
