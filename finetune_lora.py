@@ -1,3 +1,4 @@
+import os
 import fire
 import torch
 import wandb
@@ -6,7 +7,7 @@ from loguru import logger
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, MistralForCausalLM, TrainingArguments
 from trl import SFTTrainer
-from huggingface_hub import HfApi, HfFolder, Repository, create_repo
+from huggingface_hub import Repository, create_repo
 
 from utils.finetune_utils import DataCollatorForLanguageModelingChatML, prepare_dataset, print_trainable_parameters
 
@@ -109,9 +110,7 @@ def train(
     wandb.finish()
 
     # Upload to Hugging Face
-    api = HfApi()
-    token = HfFolder.get_token()
-    create_repo(hf_repo_name, token=token, private=False)
+    create_repo(hf_repo_name, token=os.environ.get("HF_TOKEN", ""), private=False)
     repo = Repository(output_dir, clone_from=hf_repo_name)
     repo.push_to_hub(commit_message="Upload LoRA model")
 
