@@ -11,7 +11,7 @@ from utils.finetune_utils import DataCollatorForLanguageModelingChatML, prepare_
 
 
 def train(
-    model_name_or_path: str = "ehartford/dolphin-2.2.1-mistral-7b",
+    model_name_or_path: str = "NousResearch/Hermes-3-Llama-3.1-8B",
     data_path: str = "./data/messages.json",
     output_dir: str = "./weights/LoRA/",
     batch_size: int = 16,
