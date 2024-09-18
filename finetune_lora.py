@@ -38,7 +38,7 @@ def train(
     # collator_res = data_collator([tokenizer(dataset["session"][2500], return_tensors="pt")["input_ids"][0]])
     # print(tokenizer.decode(collator_res["labels"][0][collator_res["labels"][0] != -100]))
 
-    model: MistralForCausalLM = AutoModelForCausalLM.from_pretrained(
+    model = AutoModelForCausalLM.from_pretrained(
         model_name_or_path,
         quantization_config=BitsAndBytesConfig(
             load_in_4bit=True,
